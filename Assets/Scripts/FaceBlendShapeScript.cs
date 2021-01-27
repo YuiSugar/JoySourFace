@@ -13,6 +13,11 @@ public class FaceBlendShapeScript : MonoBehaviour
     private const int MTH_SORROW = 27;
     private const int EYE_EXTRA_ON = 40;
 
+    // weight value
+    private const float WEIGHT_MIN = 0f;
+    private const float WEIGHT_MAX = 100f;
+    private const float WEIGHT_STEP = 2f;
+    float value = WEIGHT_MIN;
 
     // Start is called before the first frame update
     void Start()
@@ -26,26 +31,24 @@ public class FaceBlendShapeScript : MonoBehaviour
         bool isJoy = Input.GetKey(KeyCode.J);
         bool isSour = Input.GetKey(KeyCode.K);
         if (isJoy) {
-            float value = 0;
-            for (int i = 0; i < 100; i++)
-            {
-                value = i;
+            if (value < WEIGHT_MAX) {
                 blendShape.SetBlendShapeWeight(ALL_JOY, value);
+                value += WEIGHT_STEP;
             }
         }
         else if (isSour)
         {
-            float value = 0;
-            for (int i = 0; i < 100; i++)
+            if (value < WEIGHT_MAX)
             {
-                value = i;
                 blendShape.SetBlendShapeWeight(EYE_EXTRA, value);
                 blendShape.SetBlendShapeWeight(MTH_SORROW, value);
                 blendShape.SetBlendShapeWeight(EYE_EXTRA_ON, value);
+                value += WEIGHT_STEP;
             }
         }
-        else {
-            float value = 0;
+        else
+        {
+            value = WEIGHT_MIN;
             blendShape.SetBlendShapeWeight(ALL_JOY, value);
             blendShape.SetBlendShapeWeight(EYE_EXTRA, value);
             blendShape.SetBlendShapeWeight(MTH_SORROW, value);
